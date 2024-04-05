@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.config.DataBaseConfig;
 import org.example.model.User;
 
+import java.io.ObjectInputFilter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,9 @@ public class UserService {
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.execute();
             System.out.println("Your user successfully saved!");
-        } catch (SQLException e) {
+
+
+   } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -62,7 +65,7 @@ public class UserService {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+                       while (resultSet.next()) {
                 user.setId(resultSet.getInt("id"));
                 user.setName(resultSet.getString("name"));
                 user.setLastName(resultSet.getString("last_name"));
@@ -94,16 +97,7 @@ public class UserService {
     }
 
     public void deleteById(int id) {
-        String query = "DELETE FROM users WHERE id = ?" ;
-
-        try (Connection connection = DataBaseConfig.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-            System.out.println("user with id:" + id + " successfully deleted!!!");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+       String query = "delete from  users where id=?;";
     }
 
     public void updateById(int id, User newUser) {
